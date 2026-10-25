@@ -51,7 +51,11 @@ for (const fileName of htmlFiles) {
   }
 }
 
-const scripts = await readFile(path.join(docsRoot, "scripts.js"), "utf8");
+if (!(await fileExists(path.join(docsRoot, "scripts.js")))) {
+  failures.push("docs/scripts.js: compiled script is missing (run `npm run build`)");
+}
+
+const scripts = await readFile(path.join(repositoryRoot, "src", "scripts.ts"), "utf8");
 const slideshowFiles = scripts.match(/"([^"]+\.(?:jpg|jpeg|png|webp|avif|svg))"/gi) ?? [];
 
 for (const match of slideshowFiles) {
@@ -59,7 +63,7 @@ for (const match of slideshowFiles) {
   const referencedPath = path.join(docsRoot, "static", "coverphotos", fileName);
 
   if (!(await fileExists(referencedPath))) {
-    failures.push(`scripts.js: missing slideshow asset /static/coverphotos/${fileName}`);
+    failures.push(`src/scripts.ts: missing slideshow asset /static/coverphotos/${fileName}`);
   }
 }
 

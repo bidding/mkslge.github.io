@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "node scripts/validate-site.mjs",
-    "start": "http-server docs"
+    "start": "npm run build && http-server docs",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,7 @@
     "handlebars": "^4.7.7"
   },
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "typescript": "^7.0.2"
   }
 }
